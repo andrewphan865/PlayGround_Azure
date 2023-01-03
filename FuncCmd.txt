@@ -1,0 +1,22 @@
+I> Quickstart: Create a C# function in Azure from the command line
+	//learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process
+
+	func init LocalFunctionProj --dotnet	// create a functions project 
+	cd LocalFunctionProj
+
+	func new --name HttpExample --template "HTTP trigger" --authlevel "anonymous"
+	func start								//Run the function locally
+
+	//Deploy
+
+	az login
+	az group create --name AzureFunctionsQuickstart-rg --location <REGION>
+	az storage account create --name <STORAGE_NAME> --location <REGION> --resource-group AzureFunctionsQuickstart-rg --sku Standard_LRS
+	az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location <REGION> --runtime dotnet
+						  --functions-version 4 --name <APP_NAME> --storage-account <STORAGE_NAME>
+	func azure functionapp publish <APP_NAME>
+
+	//view near real-time streaming logs:
+	func azure functionapp logstream <APP_NAME>
+
+
